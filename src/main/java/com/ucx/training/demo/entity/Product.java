@@ -1,10 +1,7 @@
 package com.ucx.training.demo.entity;
 
 import com.ucx.training.demo.type.RecordStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,15 +11,18 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Product extends BaseModel<Integer>{
+
     private String name;
-    @Enumerated(EnumType.STRING)
-    private RecordStatus recordStatus;
+
     private BigDecimal unitPrice;
     private Boolean inStock;
 
-
+    @Builder
+    public Product(Integer id, RecordStatus recordStatus, String name, BigDecimal unitPrice, Boolean inStock) {
+        super(id, recordStatus);
+        this.name = name;
+        this.unitPrice = unitPrice;
+        this.inStock = inStock;
+    }
 }

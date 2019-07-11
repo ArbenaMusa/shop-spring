@@ -1,10 +1,7 @@
 package com.ucx.training.demo.entity;
 
 import com.ucx.training.demo.type.RecordStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -16,17 +13,20 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Invoice {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Invoice extends BaseModel<Integer>{
     private Integer invoiceNumber;
     @ManyToOne
-    private Costumer costumer;
+    private Customer customer;
     @ManyToMany
     private List<LineItem> list = new ArrayList<>();
 
     private BigDecimal total;
-    @Enumerated(EnumType.STRING)
-    private RecordStatus recordStatus;
+
+    @Builder
+    public Invoice(Integer id, RecordStatus recordStatus, Integer invoiceNumber, Customer customer, List<LineItem> list) {
+        super(id, recordStatus);
+        this.invoiceNumber = invoiceNumber;
+        this.customer = customer;
+        this.list = list;
+    }
 }

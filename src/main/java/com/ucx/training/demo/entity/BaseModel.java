@@ -8,18 +8,16 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity
+
+@MappedSuperclass
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Costumer {
-
+public abstract class BaseModel<T> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String name;
+    private T id;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
-
 }

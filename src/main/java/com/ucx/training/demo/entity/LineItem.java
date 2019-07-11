@@ -1,12 +1,7 @@
 package com.ucx.training.demo.entity;
 
 import com.ucx.training.demo.type.RecordStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -15,11 +10,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LineItem {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class LineItem extends BaseModel<Integer>{
 
     @ManyToOne
     private Invoice invoice;
@@ -28,7 +19,11 @@ public class LineItem {
     private Product product;
     private Integer quantity;
 
-    @Enumerated(EnumType.STRING)
-    private RecordStatus recordStatus;
-
+    @Builder
+    public LineItem(Integer id, RecordStatus recordStatus, Invoice invoice, Product product, Integer quantity) {
+        super(id, recordStatus);
+        this.invoice = invoice;
+        this.product = product;
+        this.quantity = quantity;
+    }
 }
