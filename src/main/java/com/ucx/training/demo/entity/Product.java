@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product extends BaseModel<Integer>{
+public class Product extends BaseEntity<Integer> {
 
     private String name;
 

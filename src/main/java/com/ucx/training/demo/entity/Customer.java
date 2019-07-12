@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer extends BaseModel<Integer>{
+public class Customer extends BaseEntity<Integer> {
     private String name;
 
     @Builder

@@ -1,0 +1,11 @@
+File uploader
+https://www.mkyong.com/spring-mvc/spring-mvc-file-upload-example/
+https://spring.io/guides/gs/uploading-files/
+https://www.tutorialspoint.com/springmvc/springmvc_upload.html
+https://www.javadevjournal.com/spring/spring-file-upload/
+https://www.boraji.com/spring-4-mvc-file-upload-example-with-commons-fileupload
+https://examples.javacodegeeks.com/enterprise-java/spring/mvc/spring-mvc-file-upload-example/
+https://www.codejava.net/frameworks/spring/spring-mvc-file-upload-tutorial-with-eclipse-ide?showall=1
+
+Main thing 
+http://www.technicalkeeda.com/spring-tutorials/spring-4-mvc-file-upload-example

@@ -1,6 +1,6 @@
 package com.ucx.training.demo.service;
 
-import com.ucx.training.demo.entity.BaseModel;
+import com.ucx.training.demo.entity.BaseEntity;
 import com.ucx.training.demo.repository.BaseRepository;
 import com.ucx.training.demo.type.RecordStatus;
 import org.springframework.beans.BeanUtils;
@@ -17,23 +17,26 @@ import java.util.*;
 
 @Service
 @Transactional
-public class BaseService<T extends BaseModel<U>,U> {
+public class BaseService<T extends BaseEntity<U>,U> {
 
     @Autowired
     private BaseRepository<T,U> baseRepository;
 
-    public T save(T t){
-        if (t == null) {
-            throw new IllegalArgumentException("Invalid argument: "+ t);
-        }else{
-            return baseRepository.save(t);
-        }
-    }
 
+    /**
+     * This method returns a List with all objects.
+     * @param
+     * @return
+     */
     public List<T> findAll(){
         return baseRepository.findAll();
     }
 
+    /**
+     * This method retrieves an object by a given id.
+     * @param id
+     * @return
+     */
     public T findById(U id){
         if(id == null){
             throw new IllegalArgumentException("Invalid argument: " +id);
@@ -42,31 +45,11 @@ public class BaseService<T extends BaseModel<U>,U> {
         return optionalT.orElse(null);
     }
 
-    public T update(T t, U u) {
-        if (t == null) {
-            throw new IllegalArgumentException(String.format("One of the arguments is invalid: %s", t));
-        }
-        T foundT = findById(u);
-        if (foundT == null) {
-            throw new RuntimeException("Entity not found");
-        }
-
-        BeanUtils.copyProperties(t,foundT,getNullPropertyNames(t));
-        return foundT;
-    }
-
-    public void remove(U id){
-        if(id == null){
-            throw new IllegalArgumentException("Invalid argument: " + id);
-        }
-        T t = findById(id);
-        if(t == null){
-            throw new RuntimeException("Entity not found");
-        }
-
-        t.setRecordStatus(RecordStatus.INACTIVE);
-    }
-
+    /**
+     * This method sorted List of objects.
+     * @param direction, properties
+     * @return
+     */
     public List<T> findAllSorted(String direction, String ... properties) {
 
         if (!Arrays.asList("ASC", "DESC").contains(direction.toUpperCase())) {
@@ -75,7 +58,56 @@ public class BaseService<T extends BaseModel<U>,U> {
 
         return baseRepository.findAll(Sort.by(Sort.Direction.valueOf(direction), properties));
     }
+    /**
+     * This method saves a given object and returns it.
+     * @param t
+     * @return
+     */
+    public T save(T t){
+        if (t == null) {
+            throw new IllegalArgumentException("Invalid argument: "+ t);
+        }
+        else{
+            return baseRepository.save(t);
+        }
+    }
+    /**
+     * This method updates a given object and returns it.
+     * @param t
+     * @return
+     */
+    public T update(T t, U u) {
+        if (t == null) {
+            throw new IllegalArgumentException(String.format("One of the arguments is invalid: %s.", t));
+        }
+        T foundT = findById(u);
+        if (foundT == null) {
+            throw new RuntimeException("Entity not found.");
+        }
 
+        BeanUtils.copyProperties(t,foundT,getNullPropertyNames(t));
+        return foundT;
+    }
+
+    /**
+     * This method removes a given object by id.
+     * @param id
+     */
+    public void remove(U id){
+        if(id == null){
+            throw new IllegalArgumentException("Invalid argument: " + id);
+        }
+        T t = findById(id);
+        if(t == null){
+            throw new RuntimeException("Entity not found");
+        }
+//
+//        t.setRecordStatus(RecordStatus.INACTIVE);
+
+    }
+
+
+    //----------------------------------------------------------------------
     private static <T> String[] getNullPropertyNames(T source) {
         final BeanWrapper src = new BeanWrapperImpl(source);
         java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();

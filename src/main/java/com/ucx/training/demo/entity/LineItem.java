@@ -10,19 +10,20 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LineItem extends BaseModel<Integer>{
+public class LineItem extends BaseEntity<Integer> {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private Product product;
     private Integer quantity;
 
     @Builder
-    public LineItem(Integer id, RecordStatus recordStatus, Invoice invoice, Product product, Integer quantity) {
+    public LineItem(Integer id, RecordStatus recordStatus, Product product, Integer quantity) {
         super(id, recordStatus);
-        this.invoice = invoice;
         this.product = product;
         this.quantity = quantity;
     }

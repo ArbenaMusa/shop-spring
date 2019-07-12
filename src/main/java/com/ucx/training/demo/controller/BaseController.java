@@ -1,6 +1,6 @@
 package com.ucx.training.demo.controller;
 
-import com.ucx.training.demo.entity.BaseModel;
+import com.ucx.training.demo.entity.BaseEntity;
 import com.ucx.training.demo.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public class BaseController<T extends BaseModel<U>,U> {
+public class BaseController<T extends BaseEntity<U>,U> {
 
     @Autowired
-    private BaseService<T,U> baseService;;
+    protected BaseService<T,U> baseService;;
 
     @PostMapping
     public T create(@RequestBody T t){

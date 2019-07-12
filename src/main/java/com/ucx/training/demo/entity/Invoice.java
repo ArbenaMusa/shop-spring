@@ -13,13 +13,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Invoice extends BaseModel<Integer>{
+public class Invoice extends BaseEntity<Integer> {
     private Integer invoiceNumber;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Customer customer;
-    @ManyToMany
+    @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY)
     private List<LineItem> list = new ArrayList<>();
-
     private BigDecimal total;
 
     @Builder
@@ -28,5 +27,9 @@ public class Invoice extends BaseModel<Integer>{
         this.invoiceNumber = invoiceNumber;
         this.customer = customer;
         this.list = list;
+        this.total = list
+                .stream()
+                .map(e -> e.getProduct().getUnitPrice().multiply(BigDecimal.valueOf(e.getQuantity())))
+                .reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
     }
 }
