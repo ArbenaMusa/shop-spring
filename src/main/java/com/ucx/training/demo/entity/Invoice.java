@@ -2,9 +2,12 @@ package com.ucx.training.demo.entity;
 
 import com.ucx.training.demo.type.RecordStatus;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,11 @@ public class Invoice extends BaseEntity<Integer> {
     @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY)
     private List<LineItem> list = new ArrayList<>();
     private BigDecimal total;
+
+    @CreationTimestamp
+    private LocalDateTime createDateTime;
+    @UpdateTimestamp
+    private LocalDateTime updateDateTime;
 
     @Builder
     public Invoice(Integer id, RecordStatus recordStatus, Integer invoiceNumber, Customer customer, List<LineItem> list) {

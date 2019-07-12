@@ -1,5 +1,6 @@
 package com.ucx.training.demo.controller;
 
+import com.ucx.training.demo.entity.FileEntity;
 import com.ucx.training.demo.service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ import java.util.Arrays;
 
 @Controller
 @RequestMapping("upload")
-public class FileUploadController {
+public class FileUploadController extends BaseController<FileEntity,Integer> {
 
     @Autowired
      private FileUploadService fileUploadService;
